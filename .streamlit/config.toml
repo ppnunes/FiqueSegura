@@ -1,0 +1,7 @@
+[server]
+enableStaticServing = true
+fileWatcherType = "poll"
+runOnSave = true
+
+[theme]
+base = "light"
