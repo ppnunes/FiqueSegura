@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+from pages.Dados import load_data
+from utils import init_page, load_data
 
 def enable_map():
     st.session_state.mostrar_mapa = True
@@ -10,47 +12,8 @@ def enable_map():
 def disable_map():
     st.session_state.mostrar_mapa = False
 
-@st.cache_data
-def load_data() -> pd.DataFrame:
-    df = pd.read_csv('assets/dados_violencia_mulheres_ses_2022.csv', sep=';')
-    df = pd.concat([df, pd.read_csv('assets/dados_violencia_mulheres_ses_2023.csv', sep=';')])
-    df.DT_NOTIFIC = pd.to_datetime(df.DT_NOTIFIC, format='%d/%m/%Y')
-    df.DT_NASC = pd.to_datetime(df.DT_NASC, format='%d/%m/%Y')
-    df.replace({'NU_IDADE_N': {np.nan: -1}}, inplace=True)
-    df.NU_IDADE_N = df.NU_IDADE_N.astype(int)
-    df.OUT_VEZES = df.OUT_VEZES.astype('category')
-    df.LES_AUTOP = df.LES_AUTOP.astype('category')
-    df.VIOL_FISIC = df.VIOL_FISIC.astype('category')
-    df.VIOL_PSICO = df.VIOL_PSICO.astype('category')
-    df.VIOL_SEXU = df.VIOL_SEXU.astype('category')
-    df.NUM_ENVOLV = df.NUM_ENVOLV.astype('category')
-    df.AUTOR_SEXO = df.AUTOR_SEXO.astype('category')
-    df.ORIENT_SEX = df.ORIENT_SEX.astype('category')
-    df.IDENT_GEN = df.IDENT_GEN.astype('category')
-    df.LOCAL_OCOR = df.LOCAL_OCOR.astype('category')
-    df.ID_MN_RESI = df.ID_MN_RESI.astype('category')
-    df.CS_RACA = df.CS_RACA.astype('category')
-    df.CS_SEXO = df.CS_SEXO.astype('category')
-    df.dropna(inplace=True)
-    return df
-
-st.set_page_config(
-    page_title="Fique Segura",
-    page_icon=":balloon:",
-    # layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'About': """# O que é o Fique Segura?
-O Fique Segura é um aplicativo que tem como objetivo auxiliar mulheres vítimas de violência."""
-    }
-)
+init_page()
 data = load_data()
-# Inicialize a variável de sessão como False
-if'mostrar_mapa' not in st.session_state:
-    st.session_state.mostrar_mapa = False
-    st.session_state.estado = None
-    st.session_state.cidade = None
-    st.session_state.municipio = None
 
 st.title('Fique Segura!')
 
