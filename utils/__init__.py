@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import geopandas as gpd
 
 
 def init_page():
@@ -55,3 +56,24 @@ def load_data() -> pd.DataFrame:
     # remove qualquer linha que possa contar dados nulos ainda
     df.dropna(inplace=True)
     return df
+
+@st.cache_data
+def load_map_data() -> gpd.GeoDataFrame:
+    shapefile_path = 'assets/municipios_2023.geojson'
+    gdf = gpd.read_file(shapefile_path)
+    if gdf.crs is None:
+        gdf.set_crs(epsg=4674, inplace=True)
+    return gdf
+
+@st.cache_data
+def load_map_count(limit:int = 0) -> gpd.GeoDataFrame:
+    gdf = load_map_data()
+    # municipios_grouped = data.groupby('ID_MN_RESI', observed=False).size().reset_index(name='ocorrencias')
+    # gdf = gdf.merge(municipios_grouped, left_on='NM_MUN', right_on='ID_MN_RESI', how='inner')
+    # gdf['ocorrencias'] = gdf['ocorrencias'].fillna(0)
+    # gdf.ocorrencias = gdf.ocorrencias.astype(int)
+    # gdf.to_file('assets/municipios_2023.geojson', driver='GeoJSON')
+    gdf.sort_values(by='ocorrencias', inplace=True, ascending=False)
+    if limit > 0:
+        gdf = gdf[:limit]
+    return gdf
