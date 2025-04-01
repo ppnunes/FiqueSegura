@@ -40,7 +40,18 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
 
 * Para desenvolver a aplicação, você pode editar os arquivos `Home.py` e `pages/Sobre.py`
 * Para adicionar novas páginas, crie um novo arquivo em `pages/` e adicione o código necessário
-* Para adicionar novas dependências, edite o arquivo `pyproject.toml` e adicione a dependência necessária
+* Para adicionar novas dependências, execute o seguinte comando:
+```bash
+poetry add <nome_da_dependência> [--group dev]
+```
+* Para verificar a analise de código estática, execute o seguinte comando:
+```bash
+poetry run flake8
+```
+* Para fazer a formatação automatica do código, resolvendo alguns itens do Flake8, execute o seguinte comando:
+```bash
+poetry run black .
+```
 
 ## Observações
 
