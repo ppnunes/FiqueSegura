@@ -47,3 +47,28 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
 * Certifique-se de que o Python e o Streamlit estejam instalados corretamente antes de executar a aplicação
 * Se você tiver problemas para instalar as dependências, verifique se o arquivo `pyproject.toml` está correto e se as dependências estão disponíveis
 * Se você tiver problemas para executar a aplicação, verifique se o arquivo `Home.py` está correto e se as dependências estão instaladas corretamente
+
+### Executando os Testes
+
+1. Certifique-se de que todas as dependências estão instaladas:
+   ```bash
+   poetry install
+   ```
+2. Exporte o caminho do projeto para o `PYTHONPATH`:
+   ```bash
+   export PYTHONPATH=$(pwd)
+   ```
+3. Execute os testes com o seguinte comando:
+   ```bash
+   poetry run pytest
+   ```
+
+### Adicionando Novos Testes
+
+1. Crie um novo arquivo de teste no diretório `tests/`. Por convenção, o nome do arquivo deve começar com `test_`, por exemplo, `test_novafuncionalidade.py`.
+2. Escreva suas funções de teste no arquivo criado. Cada função de teste deve começar com `test_`.
+3. Certifique-se de que os testes cobrem os cenários esperados e possíveis casos de erro.
+4. Para verificar se os novos testes estão funcionando, execute novamente o comando:
+   ```bash
+   poetry run pytest
+   ```

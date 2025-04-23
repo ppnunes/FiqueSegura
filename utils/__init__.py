@@ -31,7 +31,8 @@ def load_data() -> pd.DataFrame:
     """ Carrega os dados necessários para o projeto"""
 
     # Carrega os arquivos CSV e concatenas eles em um unico dataframe
-    df = pd.read_csv('assets/dados_violencia_mulheres_ses_2022.csv', sep=';')
+    df = pd.read_csv('assets/dados_violencia_mulheres_ses_2021.csv', sep=';')
+    df = pd.concat([df, pd.read_csv('assets/dados_violencia_mulheres_ses_2022.csv', sep=';')])
     df = pd.concat([df, pd.read_csv('assets/dados_violencia_mulheres_ses_2023.csv', sep=';')])
 
     # Converte as colunas para os tipos corretos
@@ -55,6 +56,19 @@ def load_data() -> pd.DataFrame:
 
     # remove qualquer linha que possa contar dados nulos ainda
     df.dropna(inplace=True)
+    return df
+
+@st.cache_data
+def load_feminicidio() -> pd.DataFrame:
+    df = pd.read_csv('assets/feminicidio_2022.csv', sep=';')
+    df = pd.concat([df, pd.read_csv('assets/feminicidio_2023.csv', sep=';')])
+    df = pd.concat([df, pd.read_csv('assets/feminicidio_2021.csv', sep=';')])
+
+    df.data_fato = pd.to_datetime(df.data_fato, format='%Y-%m-%d')
+    # df.tentado_consumado = df.tentado_consumado.astype('category')
+    df.qtde_vitimas = df.qtde_vitimas.astype(int)
+    df.municipio_fato = df.municipio_fato.apply(lambda x: x.title())
+
     return df
 
 @st.cache_data
