@@ -7,7 +7,6 @@ from utils import init_page, load_data
 def enable_map():
     st.session_state.mostrar_mapa = True
     st.success('Mapa carregado com sucesso!')
-    st.table(st.session_state)
 
 def disable_map():
     st.session_state.mostrar_mapa = False

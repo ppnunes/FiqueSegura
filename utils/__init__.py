@@ -24,6 +24,40 @@ def init_page():
         st.session_state.estado = None
         st.session_state.cidade = None
         st.session_state.municipio = None
+    if 'ses_columns' not in st.session_state:
+        # Salva colunas no estado da sessão
+        st.session_state.ses_columns = {
+            'DT_NOTIFIC': 'Data da Notificação',
+            'DT_NASC': 'Data de Nascimento',
+            'NU_IDADE_N': 'Idade',
+            'OUT_VEZES': 'Outras Vezes',
+            'LES_AUTOP': 'Lesão Autoprovocada',
+            'VIOL_FISIC': 'Violência Física',
+            'VIOL_PSICO': 'Violência Psicológica',
+            'VIOL_SEXU': 'Violência Sexual',
+            'NUM_ENVOLV': 'Número de Envolvidos',
+            'AUTOR_SEXO': 'Sexo do Autor',
+            'ORIENT_SEX': 'Orientação Sexual',
+            'IDENT_GEN': 'Identidade de Gênero',
+            'LOCAL_OCOR': 'Local da Ocorrência',
+            'ID_MN_RESI': 'Município',
+            'CS_RACA': 'Cor/Raça',
+            'CS_SEXO': 'Sexo',
+        }
+    if 'feminicidio_columns' not in st.session_state:
+        # Salva colunas no estado da sessão
+        st.session_state.feminicidio_columns = {
+            'data_fato': 'Data do Fato',
+            'municipio_fato': 'Município do Fato',
+            'qtde_vitimas': 'Quantidade de Vítimas',
+            'tentado_consumado': 'Tentado/Consumado',
+            'municipio_cod': 'Código do Município',
+            'mes': 'Mês',
+            'ano': 'Ano',
+            'risp': 'RISP',
+            'rmbh': 'RMBH',
+        }
+
 
 
 @st.cache_data
@@ -56,6 +90,7 @@ def load_data() -> pd.DataFrame:
 
     # remove qualquer linha que possa contar dados nulos ainda
     df.dropna(inplace=True)
+
     return df
 
 @st.cache_data
@@ -91,3 +126,15 @@ def load_map_count(limit:int = 0) -> gpd.GeoDataFrame:
     if limit > 0:
         gdf = gdf[:limit]
     return gdf
+
+def clear_names(df:pd.DataFrame|pd.Series, session_name:str) -> pd.DataFrame:
+    """Traduze os nomes das colunas do dataframe para o português"""
+    name_map = st.session_state.get(session_name, {})
+    if isinstance(df, pd.DataFrame):
+        df.columns = df.columns.map(lambda x: name_map[x] if x in name_map else x)
+    elif isinstance(df, pd.Series):
+        df = df.rename(name_map)
+    else:
+        st.toast('Nada')
+
+    return df
