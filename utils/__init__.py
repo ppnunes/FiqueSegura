@@ -19,10 +19,15 @@ def init_page():
     except:
         pass
     # Inicialize a variável de sessão como False
+    if 'nlargest' not in st.session_state:
+        st.session_state.nlargest = 10
+    if 'municipio_dados' not in st.session_state:
+        st.session_state.municipio_dados = "Belo Horizonte"
+    if 'municipio' not in st.session_state:
+        st.session_state.municipio = None
     if'mostrar_mapa' not in st.session_state:
         st.session_state.mostrar_mapa = False
-        st.session_state.estado = None
-        st.session_state.cidade = None
+        st.session_state.estado = 'Minas Gerais'
         st.session_state.municipio = None
     if 'ses_columns' not in st.session_state:
         # Salva colunas no estado da sessão
@@ -127,13 +132,21 @@ def load_map_count(limit:int = 0) -> gpd.GeoDataFrame:
         gdf = gdf[:limit]
     return gdf
 
-def clear_names(df:pd.DataFrame|pd.Series, session_name:str) -> pd.DataFrame:
+@st.cache_data
+def load_map_data_by_mn(municipality:str) -> gpd.GeoDataFrame:
+    gdf = load_map_data()
+    gdf = gdf[gdf['ID_MN_RESI'] == municipality]
+    return gdf
+
+def clear_names(df:pd.DataFrame|pd.Series|str, session_name:str) -> pd.DataFrame:
     """Traduze os nomes das colunas do dataframe para o português"""
     name_map = st.session_state.get(session_name, {})
     if isinstance(df, pd.DataFrame):
         df.columns = df.columns.map(lambda x: name_map[x] if x in name_map else x)
     elif isinstance(df, pd.Series):
         df = df.rename(name_map)
+    elif isinstance(df, str):
+        return name_map.get(df, df)
     else:
         st.toast('Nada')
 
