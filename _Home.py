@@ -1,7 +1,6 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
-from pages.Dados import load_data
 from utils import init_page, load_data, load_map_data_by_mn, clear_names
 
 def enable_map():

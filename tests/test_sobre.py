@@ -17,3 +17,5 @@ def test_sobre_app():
 
     # Testa se o estado inicial da variável de sessão é False
     assert runner.session_state.mostrar_mapa == False
+
+    
