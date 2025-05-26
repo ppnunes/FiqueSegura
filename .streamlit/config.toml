@@ -1,10 +1,10 @@
 [server]
 enableStaticServing = true
-fileWatcherType = "poll"
+fileWatcherType = "watchdog"
 runOnSave = true
 
 [theme]
 base = "light"
 
 [browser]
-gatherUsageStats = false
+gatherUsageStats = true
