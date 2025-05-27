@@ -44,12 +44,10 @@ sequenceDiagram
     participant Navegador
     participant Streamlit App
     participant Scripts de Dados
-    participant Dados Oficiais
 
     Usuário->>Navegador: Acessa a página principal
     Navegador->>Streamlit App: Envia requisição HTTP (GET)
     Streamlit App->>Scripts de Dados: Carrega e processa arquivos CSV (cache/local)
-    Scripts de Dados->>Dados Oficiais: (Opcional) Baixa arquivos atualizados
     Scripts de Dados-->>Streamlit App: Retorna DataFrames prontos para uso
     Streamlit App->>Navegador: Renderiza interface principal (mapas, gráficos, filtros)
     Navegador-->>Usuário: Exibe dashboard interativo
