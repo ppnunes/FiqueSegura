@@ -63,7 +63,7 @@ sequenceDiagram
 </script>
 """
 
-components.html(mermaid_code, height=300)
+components.html(mermaid_code, height=400, scrolling=True)
 
 
 st.markdown("""
