@@ -32,7 +32,6 @@ options_bar = [
     'ORIENT_SEX',
     'LOCAL_OCOR',
     'CS_RACA',
-    'CS_SEXO',
 ]
 st.selectbox('Eixo X:', options_bar, key='x_bar', placeholder='Selecione uma coluna', index=2, format_func=lambda x: st.session_state.ses_columns[x] if x in st.session_state.ses_columns else x)
 df_agregado_bar = dados.groupby([st.session_state.x_bar]).size().reset_index(name='Quantidade')
