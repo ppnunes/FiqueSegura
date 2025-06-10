@@ -48,10 +48,10 @@ table.reset_index().columns = ['Tipo de Violência', 'Quantidade']
 st.bar_chart(table, horizontal=True, use_container_width=True)
 
 st.text(f"Um total de {len(feminicidios[feminicidios['municipio_fato'] == unidecode(st.session_state.municipio_dados)])} tratados como feminicídio (tentado ou consumado)")
-table = feminicidios[feminicidios.municipio_fato == unidecode(st.session_state.municipio_dados)].groupby(['tentado_consumado']).size().reset_index()
-table = clear_names(table, 'feminicidio_columns')
-table = table.rename(columns={0: 'Quantidade'})
-st.table(table)
+# table = feminicidios[feminicidios.municipio_fato == unidecode(st.session_state.municipio_dados)].groupby(['tentado_consumado']).size().reset_index()
+# table = clear_names(table, 'feminicidio_columns')
+# table = table.rename(columns={0: 'Quantidade'})
+
 
 st.title(f"Os {st.session_state.nlargest} municípios com mais ocorrências")
 st.slider('Selecione um valor', min_value=2, max_value=20, step=1, key='nlargest')
