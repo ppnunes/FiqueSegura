@@ -54,7 +54,7 @@ st.text(f"Um total de {len(feminicidios[feminicidios['municipio_fato'] == unidec
 
 
 st.title(f"Os {st.session_state.nlargest} municípios com mais ocorrências")
-st.slider('Selecione um valor', min_value=2, max_value=20, step=1, key='nlargest')
+st.slider('Selecione um valor', min_value=2, max_value=20, step=1, key='nlargest', value=10)
 table_data = dados.ID_MN_RESI.value_counts(normalize=True).nlargest(st.session_state.nlargest)*100
 table_data.name = 'Proporção(%)'
 table_data = table_data.reset_index()
