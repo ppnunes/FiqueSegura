@@ -47,7 +47,7 @@ table = clear_names(table, 'ses_columns')
 table.reset_index().columns = ['Tipo de Violência', 'Quantidade']
 st.bar_chart(table, horizontal=True, use_container_width=True)
 
-st.text(f"Um total de {len(feminicidios[feminicidios['municipio_fato'] == unidecode(st.session_state.municipio_dados)])} tratados como feminicídio (tentado ou consumado)")
+st.text(f"Um total de {len(feminicidios[feminicidios['municipio_fato'] == unidecode(st.session_state.municipio_dados)])} casos tratados como feminicídio (tentado ou consumado)")
 # table = feminicidios[feminicidios.municipio_fato == unidecode(st.session_state.municipio_dados)].groupby(['tentado_consumado']).size().reset_index()
 # table = clear_names(table, 'feminicidio_columns')
 # table = table.rename(columns={0: 'Quantidade'})
