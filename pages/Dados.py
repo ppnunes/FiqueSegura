@@ -14,11 +14,30 @@ st.markdown(f""" # Sobre os dados
 Os dados foram obtidos do portal dados abertos e abordam os dados apresentados de {dados.DT_NOTIFIC.min().strftime('%d/%m/%Y')} até {dados.DT_NOTIFIC.max().strftime('%d/%m/%Y')}, tendo no total {len(dados)} ocorrências (média de  {len(dados)/(365*2):.2f} ocorrências por dia). Os dados são referentes **apenas** a Minas Gerais, visto a indisponibilidade dos demais estados em compartilhar estes dados.
 """)
 # st.table(dados.head()[['NU_IDADE_N','ID_MN_RESI','VIOL_SEXU', 'VIOL_PSICO']])
+options_line = [
+    'DT_NOTIFIC',
+    'NU_IDADE_N',
+    'ID_MN_RESI',
+]
 
-st.selectbox('Eixo X:', dados.columns, key='x', placeholder='Selecione uma coluna', index=2, format_func=lambda x: st.session_state.ses_columns[x] if x in st.session_state.ses_columns else x)
+st.selectbox('Eixo X:', options_line, key='x', placeholder='Selecione uma coluna', index=2, format_func=lambda x: st.session_state.ses_columns[x] if x in st.session_state.ses_columns else x)
 
 df_agregado = dados.groupby([st.session_state.x]).size().reset_index(name='Quantidade')
-st.line_chart(df_agregado, x=st.session_state.x, y='Quantidade', x_label='Idade')
+st.line_chart(df_agregado, x=st.session_state.x, y='Quantidade', x_label=st.session_state.ses_columns[st.session_state.x])
+
+options_bar = [
+    'VIOL_FISIC',
+    'VIOL_PSICO',
+    'VIOL_SEXU',
+    'ORIENT_SEX',
+    'LOCAL_OCOR',
+    'CS_RACA',
+    'CS_SEXO',
+]
+st.selectbox('Eixo X:', options_bar, key='x_bar', placeholder='Selecione uma coluna', index=2, format_func=lambda x: st.session_state.ses_columns[x] if x in st.session_state.ses_columns else x)
+df_agregado_bar = dados.groupby([st.session_state.x_bar]).size().reset_index(name='Quantidade')
+st.bar_chart(df_agregado_bar, x=st.session_state.x_bar, y='Quantidade', x_label=st.session_state.ses_columns[st.session_state.x_bar])
+
 
 st.selectbox('Município:', sorted(dados.ID_MN_RESI.unique()), key='municipio_dados', placeholder='Selecione um Município')
 
