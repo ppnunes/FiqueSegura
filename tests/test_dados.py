@@ -22,6 +22,6 @@ def test_dados_selectbox():
     assert runner.selectbox[0].label == "Eixo X:"
     assert len(runner.selectbox[0].options) > 0  # Deve ter opções disponíveis
 
-    # Verifica o segundo selectbox (Município)
-    assert runner.selectbox[1].label == "Município:"
+    # Verifica o terceiro selectbox (Município)
+    assert runner.selectbox[2].label == "Município:"
     assert len(runner.selectbox[1].options) > 0  # Deve ter opções disponíveis
