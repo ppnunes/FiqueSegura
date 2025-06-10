@@ -20,7 +20,7 @@ options_line = [
     'ID_MN_RESI',
 ]
 
-st.selectbox('Eixo X:', options_line, key='x', placeholder='Selecione uma coluna', index=2, format_func=lambda x: st.session_state.ses_columns[x] if x in st.session_state.ses_columns else x)
+st.selectbox('Eixo X:', options_line, key='x', placeholder='Selecione uma coluna', index=1, format_func=lambda x: st.session_state.ses_columns[x] if x in st.session_state.ses_columns else x)
 
 df_agregado = dados.groupby([st.session_state.x]).size().reset_index(name='Quantidade')
 st.line_chart(df_agregado, x=st.session_state.x, y='Quantidade', x_label=st.session_state.ses_columns[st.session_state.x])
