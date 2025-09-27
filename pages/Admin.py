@@ -35,9 +35,12 @@ else:
     else:
         st.write('Nenhum dado disponível.')
 
-    st.subheader('Estados mais escolhidos')
+    st.subheader('Estados mais acessados (Top 10)')
     if relatorio['estados']:
-        for estado, total in relatorio['estados']:
-            st.write(f"{estado}: {total} buscas")
+        # Ordena por quantidade (desc) e nome (asc)
+        estados_ordenados = sorted(relatorio['estados'], key=lambda x: (-x[1], x[0]))
+        import pandas as pd
+        df_estados = pd.DataFrame(estados_ordenados, columns=['Estado', 'Buscas'])
+        st.table(df_estados)
     else:
         st.write('Nenhum dado disponível.')

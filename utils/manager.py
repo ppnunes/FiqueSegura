@@ -16,14 +16,18 @@ def logoff():
 
 def login():
     st.title("🔒 Login Administrativo")
-    usuario = st.text_input("Usuário", value="admin")
-    senha = st.text_input("Senha", type="password", value="1234")
-    if st.button("Entrar"):
-        if usuario == "admin" and senha == "1234":
-            st.session_state["logado_admin"] = True
-            st.rerun()
-        else:
-            st.error("Usuário ou senha incorretos.")
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        usuario = st.text_input("Usuário", value="admin", placeholder="Usuário", help="Digite seu usuário", key="login_usuario")
+        senha = st.text_input("Senha", type="password", value="1234", placeholder="Senha", help="Digite sua senha", key="login_senha")
+        col_btn1, col_btn2 = st.columns([5,1])
+        with col_btn2:
+            if st.button("Entrar"):
+                if usuario == "admin" and senha == "1234":
+                    st.session_state["logado_admin"] = True
+                    st.rerun()
+                else:
+                    st.error("Usuário ou senha incorretos.")
 
 
 def carregar_markdown_url(url):
