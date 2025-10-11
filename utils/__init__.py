@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import geopandas as gpd
 import sqlite3
+import io
 
 def gdf_from_sqlite(table_name, db_name="cache.db", crs="EPSG:4674"):
     conn = get_sqlite_conn(db_name)
@@ -50,12 +51,12 @@ def df_from_sqlite(table_name, db_name="cache.db"):
         return df
 
 
-def init_page():
+def init_page(page_icon=":balloon:", layout="centered"):
     try:
         st.set_page_config(
             page_title="Fique Segura",
-            page_icon=":balloon:",
-            # layout="wide",
+            page_icon=page_icon,
+            layout=layout,
             initial_sidebar_state="expanded",
             menu_items={
                 'About': """# O que é o Fique Segura?
@@ -231,3 +232,22 @@ def clear_names(df:pd.DataFrame|pd.Series|str, session_name:str) -> pd.DataFrame
         st.toast('Nada')
 
     return df
+
+def export_df(df:pd.DataFrame|pd.Series|list, key:str):
+
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        if isinstance(df, list):
+            for i in df:
+                i.to_excel(writer, index=False)
+        else:
+            df.to_excel(writer, index=False)
+    output.seek(0)
+    st.download_button(
+        label="Exportar tabela",
+        data=output,
+        file_name="fiquesegura.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        key=key
+    )
+

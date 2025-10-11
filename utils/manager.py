@@ -16,8 +16,8 @@ def logoff():
 
 def login():
     st.title("🔒 Login Administrativo")
-    col1, col2, col3 = st.columns([1,2,1])
-    with col2:
+    col1, col2 = st.columns([2,1])
+    with col1:
         usuario = st.text_input("Usuário", value="admin", placeholder="Usuário", help="Digite seu usuário", key="login_usuario")
         senha = st.text_input("Senha", type="password", value="1234", placeholder="Senha", help="Digite sua senha", key="login_senha")
         col_btn1, col_btn2 = st.columns([5,1])
