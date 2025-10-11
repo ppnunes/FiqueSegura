@@ -1,13 +1,14 @@
 from pathlib import Path
 import streamlit.testing.v1 as ts_test
+from views.Dados import main
 
 def test_dados_file():
     # Testa se o arquivo Dados.py existe
-    assert (Path(__file__).parent.parent / "pages/Dados.py").exists()
+    assert (Path(__file__).parent.parent / "views/Dados.py").exists()
 
 def test_dados_title_and_markdown():
     # Testa se o título e o markdown inicial estão presentes
-    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "pages/Dados.py")
+    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "views/Dados.py")
     runner.run(timeout=30)
 
     # Verifica o markdown inicial
@@ -15,7 +16,7 @@ def test_dados_title_and_markdown():
 
 def test_dados_selectbox():
     # Testa se os selectboxes estão presentes e possuem as opções corretas
-    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "pages/Dados.py")
+    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "views/Dados.py")
     runner.run(timeout=30)
 
     # Verifica o primeiro selectbox (Eixo X)
