@@ -3,7 +3,7 @@ name = "fiquesegura"
 version = "0.1.0"
 description = ""
 authors = [{ name = "Priscila Pereira Nunes" }]
-requires-python = "~=3.10"
+requires-python = ">=3.10"
 readme = "README.md"
 license = "MIT"
 dependencies = [

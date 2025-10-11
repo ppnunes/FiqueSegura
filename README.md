@@ -5,7 +5,7 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
 ## Requisitos
 
 * Python 3.10 ou superior
-* Poetry 1.8.3 ou superior
+* Uv 0.8.2 ou superior
 
 ## Instalação
 
@@ -17,20 +17,20 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
    ```bash
    cd FiqueSegura
    ```
-3. Instale as dependências com Poetry:
+3. Instale as dependências com Uv:
    ```bash
-   poetry install
+   uv sync
    ```
 4. Verifique se o Streamlit está instalado:
    ```bash
-   poetry run streamlit --version
+   uv run streamlit --version
    ```
 
 ## Execução
 
 1. Execute a aplicação com o seguinte comando:
    ```bash
-   poetry run streamlit run Home.py
+   uv run streamlit run main.py
    ```
 2. Acesse a aplicação em seu navegador:
    * Abra um navegador e acesse `http://localhost:8501`
@@ -38,21 +38,21 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
 
 ## Desenvolvimento
 
-* Para desenvolver a aplicação, você pode editar os arquivos `Home.py` e `pages/Sobre.py`
-* Para adicionar novas páginas, crie um novo arquivo em `pages/` e adicione o código necessário
+* Para desenvolver a aplicação, você pode editar os arquivos `main.py` e `views/`
+* Para adicionar novas páginas, crie um novo arquivo em `views/` e adicione o código necessário
 * Para adicionar novas dependências, edite o arquivo `pyproject.toml` e adicione a dependência necessária
 
 ## Observações
 
 * Certifique-se de que o Python e o Streamlit estejam instalados corretamente antes de executar a aplicação
 * Se você tiver problemas para instalar as dependências, verifique se o arquivo `pyproject.toml` está correto e se as dependências estão disponíveis
-* Se você tiver problemas para executar a aplicação, verifique se o arquivo `Home.py` está correto e se as dependências estão instaladas corretamente
+* Se você tiver problemas para executar a aplicação, verifique se o arquivo `main.py` está correto e se as dependências estão instaladas corretamente
 
 ### Executando os Testes
 
 1. Certifique-se de que todas as dependências estão instaladas:
    ```bash
-   poetry install
+   uv sync
    ```
 2. Exporte o caminho do projeto para o `PYTHONPATH`:
    ```bash
@@ -60,7 +60,7 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
    ```
 3. Execute os testes com o seguinte comando:
    ```bash
-   poetry run pytest
+   uv run pytest
    ```
 
 ### Adicionando Novos Testes
@@ -70,5 +70,5 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
 3. Certifique-se de que os testes cobrem os cenários esperados e possíveis casos de erro.
 4. Para verificar se os novos testes estão funcionando, execute novamente o comando:
    ```bash
-   poetry run pytest
+   uv run pytest
    ```
