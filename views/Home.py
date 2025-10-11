@@ -100,4 +100,5 @@ def main():
     else:
         st.button('Buscar', on_click=buscar_callback, disabled=not st.session_state.municipio)
 
-# Para rodar a tela Home, chame main()
+if __name__ == "__main__":
+    main()

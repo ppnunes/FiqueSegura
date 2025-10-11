@@ -3,11 +3,11 @@ import streamlit.testing.v1 as ts_test
 
 def test_sobre_file():
     # Testa se o arquivo existe
-    assert Path(__file__).parent.parent / "pages" / "Sobre.py"
+    assert Path(__file__).parent.parent / "views" / "Sobre.py"
 
 def test_sobre_app():
     # Testa se o app inicia corretamente
-    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "pages" / "Sobre.py")
+    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "views" / "Sobre.py")
     runner.run(timeout=30) # Precisamos de uma espera maior para o app carregar
 
     # Testa se o título está correto

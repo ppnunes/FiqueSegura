@@ -94,3 +94,7 @@ def main():
 
     st.table(table_data)
     export_df(table_data, key="download_table_data")
+
+
+if __name__ == "__main__":
+    main()

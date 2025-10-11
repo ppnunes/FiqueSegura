@@ -76,3 +76,6 @@ def main():
 
     Para mais informações, dúvidas ou sugestões, entre em contato pelo GitHub: [ppnunes](https://github.com/ppnunes)
     """)
+
+if __name__ == "__main__":
+    main()

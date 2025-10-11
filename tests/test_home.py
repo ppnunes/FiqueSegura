@@ -3,11 +3,11 @@ import streamlit.testing.v1 as ts_test
 
 def test_home_file():
     # Testa se o arquivo existe
-    assert Path(__file__).parent.parent / "_Home.py"
+    assert Path(__file__).parent.parent / "views/Home.py"
 
 def test_home_app():
     # Testa se o app inicia corretamente
-    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "_Home.py")
+    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "views/Home.py")
     runner.run(timeout=30) # Precisamos de uma espera maior para o app carregar
 
      # Testa se o título está correto
@@ -29,7 +29,7 @@ def test_home_app():
     assert any(button.label == "Buscar" for button in runner.button)
 
 def test_buscar_button():
-    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "_Home.py").run()
+    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "views/Home.py").run()
     runner.button[0].click().run()
     runner.session_state.municipio = "Belo Horizonte"  # Simula a seleção de um município
 
@@ -39,7 +39,7 @@ def test_buscar_button():
     assert runner.session_state.mostrar_mapa is False
 
 def test_mapa_container():
-    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "_Home.py")
+    runner = ts_test.AppTest.from_file(Path(__file__).parent.parent / "views/Home.py")
     runner.session_state.municipio = "Belo Horizonte"  # Simula a seleção de um município
     runner.session_state.mostrar_mapa = True
     runner.run(timeout=30)
