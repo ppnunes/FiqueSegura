@@ -1,7 +1,4 @@
 import requests
-import numpy as np
-import matplotlib.pyplot as plt
-import time
 import streamlit as st
 import sqlite3
 from datetime import datetime
