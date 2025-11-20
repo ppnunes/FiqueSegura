@@ -38,17 +38,17 @@ def df_from_sqlite(table_name, db_name="cache.db"):
     conn.close()
     return df
 
-    def gdf_from_sqlite(table_name, db_name="cache.db", crs="EPSG:4674"):
-        import pandas as pd
-        import geopandas as gpd
-        conn = get_sqlite_conn(db_name)
-        df = pd.read_sql(f"SELECT * FROM {table_name}", conn)
-        conn.close()
-        if "geometry" in df.columns:
-            df["geometry"] = gpd.GeoSeries.from_wkt(df["geometry"])
-            gdf = gpd.GeoDataFrame(df, geometry="geometry", crs=crs)
-            return gdf
-        return df
+def gdf_from_sqlite(table_name, db_name="cache.db", crs="EPSG:4674"):
+    import pandas as pd
+    import geopandas as gpd
+    conn = get_sqlite_conn(db_name)
+    df = pd.read_sql(f"SELECT * FROM {table_name}", conn)
+    conn.close()
+    if "geometry" in df.columns:
+        df["geometry"] = gpd.GeoSeries.from_wkt(df["geometry"])
+        gdf = gpd.GeoDataFrame(df, geometry="geometry", crs=crs)
+        return gdf
+    return df
 
 
 def init_page(page_icon=":balloon:", layout="centered"):
