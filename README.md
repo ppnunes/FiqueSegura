@@ -63,6 +63,91 @@ O Fique Segura é uma aplicação web que reúne dados oficiais de crimes de vio
    uv run pytest
    ```
 
+### Testes de Carga e Stress com k6
+
+O projeto inclui testes de carga e stress usando k6 para validar a performance e resiliência da aplicação.
+
+#### Pré-requisitos
+
+1. Instale o k6:
+   ```bash
+   # macOS (usando Homebrew)
+   brew install k6
+   
+   # Ou baixe diretamente em https://k6.io/docs/get-started/installation/
+   ```
+
+2. Verifique a instalação:
+   ```bash
+   k6 version
+   ```
+
+#### Executando os Testes de Carga
+
+1. Certifique-se de que a aplicação está rodando:
+   ```bash
+   uv run streamlit run main.py
+   ```
+
+2. Em outro terminal, execute o teste de carga:
+   ```bash
+   k6 run tests/k6_fiquesegura_load_test.js
+   ```
+
+3. Para especificar uma URL base diferente:
+   ```bash
+   k6 run -e BASE_URL=http://seu-servidor:8501 tests/k6_fiquesegura_load_test.js
+   ```
+
+#### Executando os Testes de Stress
+
+1. Certifique-se de que a aplicação está rodando:
+   ```bash
+   uv run streamlit run main.py
+   ```
+
+2. Em outro terminal, execute o teste de stress:
+   ```bash
+   k6 run tests/k6_fiquesegura_stress_ui.js
+   ```
+
+3. Para especificar uma URL base diferente:
+   ```bash
+   k6 run -e BASE_URL=http://seu-servidor:8501 tests/k6_fiquesegura_stress_ui.js
+   ```
+
+#### Gerando Relatórios em HTML
+
+Para gerar relatórios em HTML com os resultados:
+
+```bash
+# Teste de carga com saída em HTML
+k6 run tests/k6_fiquesegura_load_test.js --out csv=load.csv
+k6 run tests/k6_fiquesegura_load_test.js --out json=load.json
+
+# Teste de stress com saída em HTML
+k6 run tests/k6_fiquesegura_stress_ui.js --out csv=stress.csv
+k6 run tests/k6_fiquesegura_stress_ui.js --out json=stress.json
+```
+
+Você pode utilizar também o  plugin [xk6-dashboard](https://github.com/grafana/xk6-dashboard) para ter uma boa visualização da saída.
+#### Interpretando os Resultados
+
+**Teste de Carga:**
+- Valida que o sistema comporta até 2000 usuários simultâneos
+- Verifica se p(95) < 500ms e p(99) < 1200ms
+- Taxa de erro máxima permitida: < 1%
+
+**Teste de Stress:**
+- Simula aumento gradual de carga até 5000 usuários
+- Verifica se p(95) < 1500ms e p(99) < 2000ms
+- Taxa de erro máxima permitida: < 10%
+
+Os testes executam requisições para:
+- `GET /` - Página inicial
+- `GET /?page=dados` - Página de dados
+- `GET /favicon.ico` - Recurso estático
+
 ### Adicionando Novos Testes
 
 1. Crie um novo arquivo de teste no diretório `tests/`. Por convenção, o nome do arquivo deve começar com `test_`, por exemplo, `test_novafuncionalidade.py`.
