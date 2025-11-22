@@ -1,0 +1,57 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  run-k6-tests:
+    name: "Rodar Streamlit local + k6"
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        test:
+          - name: "Teste de Carga"
+            script: "tests/k6_fiquesegura_load_test.js"
+          - name: "Teste de Stress"
+            script: "tests/k6_fiquesegura_stress_ui.js"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Instalar uv
+        run: |
+          pip install uv
+
+      - name: Instalar dependências do projeto
+        run: |
+          uv sync
+
+      - name: Iniciar Streamlit em background na porta 8501
+        run: |
+          uv run streamlit run main.py --server.headless true --server.port 8501 &
+          sleep 4
+
+      - name: Checar se a app está pronta antes de testar
+        run: |
+          for i in {1..30}; do
+            if curl -sS http://localhost:8501/ > /dev/null; then
+              echo "Streamlit OK"
+              break
+            fi
+            echo "Aguardando Streamlit... ($i)"
+            sleep 2
+          done
+          curl -sS -f http://localhost:8501/ || (echo "Streamlit não iniciou" && exit 1)
+
+      - name: Instalar k6
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnupg
+          curl -s https://k6.io/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/k6-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Executar ${{ matrix.test.name }}
+        run: |
+          k6 run ${{ matrix.test.script }}
